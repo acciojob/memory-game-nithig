@@ -8,7 +8,6 @@ const LEVELS = {
 };
 
 function shuffle(array) {
-  // Fisher-Yates shuffle
   let arr = array.slice();
   for (let i = arr.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -35,20 +34,20 @@ function generateTiles(level) {
 }
 
 const App = () => {
+  const [page, setPage] = useState("landing"); // landing | game
   const [level, setLevel] = useState("easy");
-  const [tiles, setTiles] = useState(generateTiles("easy"));
-  const [flipped, setFlipped] = useState([]); // store indices of flipped tiles
+  const [tiles, setTiles] = useState([]);
+  const [flipped, setFlipped] = useState([]);
   const [attempts, setAttempts] = useState(0);
   const [matchedCount, setMatchedCount] = useState(0);
 
-  // Reset game when level changes
-  function handleLevelChange(e) {
-    const newLevel = e.target.value;
-    setLevel(newLevel);
-    setTiles(generateTiles(newLevel));
+  function startGame(selectedLevel) {
+    setLevel(selectedLevel);
+    setTiles(generateTiles(selectedLevel));
     setFlipped([]);
     setAttempts(0);
     setMatchedCount(0);
+    setPage("game");
   }
 
   function handleTileClick(idx) {
@@ -65,7 +64,6 @@ const App = () => {
       setAttempts(attempts + 1);
       const [i1, i2] = newFlipped;
       if (newTiles[i1].value === newTiles[i2].value) {
-        // Match found
         setTimeout(function () {
           const updatedTiles = newTiles.slice();
           updatedTiles[i1].matched = true;
@@ -75,7 +73,6 @@ const App = () => {
           setFlipped([]);
         }, 600);
       } else {
-        // Not a match
         setTimeout(function () {
           const updatedTiles = newTiles.slice();
           updatedTiles[i1].flipped = false;
@@ -91,7 +88,6 @@ const App = () => {
     return matchedCount === LEVELS[level].pairs;
   }
 
-  // For grid class
   const gridClass =
     "cells_container " +
     (level === "easy"
@@ -100,37 +96,40 @@ const App = () => {
       ? "normal"
       : "hard");
 
+  // Landing Page
+  if (page === "landing") {
+    return (
+      <div className="main_container">
+        <h1>Welcome!</h1>
+        <div className="levels_container">
+          <button id="easy" onClick={() => startGame("easy")}>Easy</button>
+          <button id="normal" onClick={() => startGame("normal")}>Normal</button>
+          <button id="hard" onClick={() => startGame("hard")}>Hard</button>
+        </div>
+      </div>
+    );
+  }
+
+  // Game Page
   return (
     <div className="main_container">
-      <h1>Welcome to My Memory Game</h1>
+      <h1>Memory Game</h1>
       <div className="levels_container">
-        <input
-          type="radio"
+        <button
           id="easy"
-          name="level"
-          value="easy"
-          checked={level === "easy"}
-          onChange={handleLevelChange}
-        />
-        <label htmlFor="easy">Easy</label>
-        <input
-          type="radio"
+          onClick={() => startGame("easy")}
+          style={{ background: level === "easy" ? "#eaf2ff" : undefined }}
+        >Easy</button>
+        <button
           id="normal"
-          name="level"
-          value="normal"
-          checked={level === "normal"}
-          onChange={handleLevelChange}
-        />
-        <label htmlFor="normal">Normal</label>
-        <input
-          type="radio"
+          onClick={() => startGame("normal")}
+          style={{ background: level === "normal" ? "#eaf2ff" : undefined }}
+        >Normal</button>
+        <button
           id="hard"
-          name="level"
-          value="hard"
-          checked={level === "hard"}
-          onChange={handleLevelChange}
-        />
-        <label htmlFor="hard">Hard</label>
+          onClick={() => startGame("hard")}
+          style={{ background: level === "hard" ? "#eaf2ff" : undefined }}
+        >Hard</button>
       </div>
 
       <div className="status_container">
