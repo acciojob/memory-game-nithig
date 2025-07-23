@@ -64,20 +64,24 @@ const App = () => {
       setAttempts(attempts + 1);
       const [i1, i2] = newFlipped;
       if (newTiles[i1].value === newTiles[i2].value) {
-        setTimeout(function () {
-          const updatedTiles = newTiles.slice();
-          updatedTiles[i1].matched = true;
-          updatedTiles[i2].matched = true;
-          setTiles(updatedTiles);
-          setMatchedCount(matchedCount + 1);
+        setTimeout(() => {
+          setTiles(prevTiles => {
+            const updatedTiles = [...prevTiles];
+            updatedTiles[i1].matched = true;
+            updatedTiles[i2].matched = true;
+            return updatedTiles;
+          });
+          setMatchedCount(c => c + 1);
           setFlipped([]);
         }, 600);
       } else {
-        setTimeout(function () {
-          const updatedTiles = newTiles.slice();
-          updatedTiles[i1].flipped = false;
-          updatedTiles[i2].flipped = false;
-          setTiles(updatedTiles);
+        setTimeout(() => {
+          setTiles(prevTiles => {
+            const updatedTiles = [...prevTiles];
+            updatedTiles[i1].flipped = false;
+            updatedTiles[i2].flipped = false;
+            return updatedTiles;
+          });
           setFlipped([]);
         }, 900);
       }
@@ -102,9 +106,33 @@ const App = () => {
       <div className="main_container">
         <h1>Welcome!</h1>
         <div className="levels_container">
-          <button id="easy" onClick={() => startGame("easy")}>Easy</button>
-          <button id="normal" onClick={() => startGame("normal")}>Normal</button>
-          <button id="hard" onClick={() => startGame("hard")}>Hard</button>
+          <input
+            type="radio"
+            id="easy"
+            name="level"
+            value="easy"
+            checked={level === "easy"}
+            onChange={() => setLevel("easy")}
+          />
+          <label htmlFor="easy" onClick={() => startGame("easy")}>Easy</label>
+          <input
+            type="radio"
+            id="normal"
+            name="level"
+            value="normal"
+            checked={level === "normal"}
+            onChange={() => setLevel("normal")}
+          />
+          <label htmlFor="normal" onClick={() => startGame("normal")}>Normal</label>
+          <input
+            type="radio"
+            id="hard"
+            name="level"
+            value="hard"
+            checked={level === "hard"}
+            onChange={() => setLevel("hard")}
+          />
+          <label htmlFor="hard" onClick={() => startGame("hard")}>Hard</label>
         </div>
       </div>
     );
