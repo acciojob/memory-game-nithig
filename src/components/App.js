@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import "./../styles/App.css";
 
+// Define the game levels and their properties.
 const LEVELS = {
   easy: { tiles: 8, pairs: 4 },
   normal: { tiles: 16, pairs: 8 },
   hard: { tiles: 32, pairs: 16 },
 };
 
+/**
+ * Shuffles an array using the Fisher-Yates algorithm.
+ * @param {Array} array - The array to shuffle.
+ * @returns {Array} A new, shuffled array.
+ */
 function shuffle(array) {
   let arr = array.slice();
   for (let i = arr.length - 1; i > 0; i--) {
@@ -18,6 +24,11 @@ function shuffle(array) {
   return arr;
 }
 
+/**
+ * Generates an array of tile objects for the selected level.
+ * @param {string} level - The difficulty level ('easy', 'normal', or 'hard').
+ * @returns {Array} An array of tile objects.
+ */
 function generateTiles(level) {
   const { pairs } = LEVELS[level];
   let numbers = [];
@@ -41,6 +52,10 @@ const App = () => {
   const [attempts, setAttempts] = useState(0);
   const [matchedCount, setMatchedCount] = useState(0);
 
+  /**
+   * Starts a new game with the selected difficulty level.
+   * @param {string} selectedLevel - The new difficulty level.
+   */
   function startGame(selectedLevel) {
     setLevel(selectedLevel);
     setTiles(generateTiles(selectedLevel));
@@ -50,9 +65,13 @@ const App = () => {
     setPage("game");
   }
 
+  /**
+   * Handles a tile click event.
+   * @param {number} idx - The index of the clicked tile.
+   */
   function handleTileClick(idx) {
-    if (tiles[idx].flipped || tiles[idx].matched || flipped.length === 2)
-      return;
+    // Ignore clicks on already flipped/matched tiles or when two tiles are already flipped.
+    if (tiles[idx].flipped || tiles[idx].matched || flipped.length === 2) return;
 
     const newTiles = tiles.slice();
     newTiles[idx].flipped = true;
@@ -61,11 +80,13 @@ const App = () => {
     setTiles(newTiles);
     setFlipped(newFlipped);
 
+    // If two tiles have been flipped, check for a match.
     if (newFlipped.length === 2) {
       setAttempts(attempts + 1);
       const [i1, i2] = newFlipped;
       if (newTiles[i1].value === newTiles[i2].value) {
-        setTimeout(function () {
+        // If a match is found, mark the tiles as matched after a delay.
+        setTimeout(() => {
           const updatedTiles = newTiles.slice();
           updatedTiles[i1].matched = true;
           updatedTiles[i2].matched = true;
@@ -74,7 +95,8 @@ const App = () => {
           setFlipped([]);
         }, 600);
       } else {
-        setTimeout(function () {
+        // If no match, flip the tiles back over after a delay.
+        setTimeout(() => {
           const updatedTiles = newTiles.slice();
           updatedTiles[i1].flipped = false;
           updatedTiles[i2].flipped = false;
@@ -85,132 +107,92 @@ const App = () => {
     }
   }
 
+  /**
+   * Checks if the game is complete.
+   * @returns {boolean} True if all pairs have been matched, otherwise false.
+   */
   function isGameComplete() {
     return matchedCount === LEVELS[level].pairs;
   }
 
   const gridClass =
     "cells_container " +
-    (level === "easy" ? "easy" : level === "normal" ? "normal" : "hard");
+    (level === "easy"
+      ? "easy"
+      : level === "normal"
+      ? "normal"
+      : "hard");
 
-  // Landing Page
+  // Landing Page view with radio buttons for level selection.
   if (page === "landing") {
     return (
       <div className="main_container">
         <h1>Welcome!</h1>
         <div className="levels_container">
-          <label>
-            <input
-              type="radio"
-              id="easy"
-              name="difficulty"
-              onChange={() => startGame("easy")}
-              checked={level === "easy"}
-              style={{
-                position: "absolute",
-                opacity: 0,
-                pointerEvents: "none",
-              }}
-            />
-            <button onClick={() => startGame("easy")}>Easy</button>
-          </label>
-          <label>
-            <input
-              type="radio"
-              id="normal"
-              name="difficulty"
-              onChange={() => startGame("normal")}
-              checked={level === "normal"}
-              style={{
-                position: "absolute",
-                opacity: 0,
-                pointerEvents: "none",
-              }}
-            />
-            <button onClick={() => startGame("normal")}>Normal</button>
-          </label>
-          <label>
-            <input
-              type="radio"
-              id="hard"
-              name="difficulty"
-              onChange={() => startGame("hard")}
-              checked={level === "hard"}
-              style={{
-                position: "absolute",
-                opacity: 0,
-                pointerEvents: "none",
-              }}
-            />
-            <button onClick={() => startGame("hard")}>Hard</button>
-          </label>
+          <input
+            type="radio"
+            id="easy"
+            name="difficulty"
+            value="easy"
+            checked={level === "easy"}
+            onChange={(e) => startGame(e.target.value)}
+          />
+          <label htmlFor="easy">Easy</label>
+          <input
+            type="radio"
+            id="normal"
+            name="difficulty"
+            value="normal"
+            checked={level === "normal"}
+            onChange={(e) => startGame(e.target.value)}
+          />
+          <label htmlFor="normal">Normal</label>
+          <input
+            type="radio"
+            id="hard"
+            name="difficulty"
+            value="hard"
+            checked={level === "hard"}
+            onChange={(e) => startGame(e.target.value)}
+          />
+          <label htmlFor="hard">Hard</label>
         </div>
       </div>
     );
   }
 
-  // Game Page
+  // Game Page view
   return (
     <div className="main_container">
       <h1>Memory Game</h1>
       <div className="levels_container">
-        <label>
-          <input
-            type="radio"
-            id="easy"
-            name="difficulty"
-            onChange={() => startGame("easy")}
-            checked={level === "easy"}
-            style={{
-              position: "absolute",
-              opacity: 0,
-              pointerEvents: "none",
-            }}
-          />
-          <button
-            style={{ background: level === "easy" ? "#eaf2ff" : undefined }}
-          >
-            Easy
-          </button>
-        </label>
-        <label>
-          <input
-            type="radio"
-            id="normal"
-            name="difficulty"
-            onChange={() => startGame("normal")}
-            checked={level === "normal"}
-            style={{
-              position: "absolute",
-              opacity: 0,
-              pointerEvents: "none",
-            }}
-          />
-          <button
-            style={{ background: level === "normal" ? "#eaf2ff" : undefined }}
-          >
-            Normal
-          </button>
-        </label>
-        <label>
-          <input
-            type="radio"
-            id="hard"
-            name="difficulty"
-            onChange={() => startGame("hard")}
-            checked={level === "hard"}
-            style={{
-              position: "absolute",
-              opacity: 0,
-              pointerEvents: "none",
-            }}
-          />
-          <button
-            style={{ background: level === "hard" ? "#eaf2ff" : undefined }}
-          >
-            Hard
-          </button>
-        </label>
+        <input
+          type="radio"
+          id="easy"
+          name="difficulty"
+          value="easy"
+          checked={level === "easy"}
+          onChange={(e) => startGame(e.target.value)}
+        />
+        <label htmlFor="easy">Easy</label>
+        <input
+          type="radio"
+          id="normal"
+          name="difficulty"
+          value="normal"
+          checked={level === "normal"}
+          onChange={(e) => startGame(e.target.value)}
+        />
+        <label htmlFor="normal">Normal</label>
+        <input
+          type="radio"
+          id="hard"
+          name="difficulty"
+          value="hard"
+          checked={level === "hard"}
+          onChange={(e) => startGame(e.target.value)}
+        />
+        <label htmlFor="hard">Hard</label>
       </div>
 
       <div className="status_container">
