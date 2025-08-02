@@ -30,9 +30,11 @@ h1 {
   margin-bottom: 30px;
 }
 
-/* Hide the default radio button */
+/* Hide the default radio button while keeping it visible to Cypress */
 .levels_container input[type="radio"] {
-  display: none;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none; /* Prevents the invisible radio button from capturing clicks */
 }
 
 /* Style the label to look like a button */
