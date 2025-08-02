@@ -51,7 +51,8 @@ const App = () => {
   }
 
   function handleTileClick(idx) {
-    if (tiles[idx].flipped || tiles[idx].matched || flipped.length === 2) return;
+    if (tiles[idx].flipped || tiles[idx].matched || flipped.length === 2)
+      return;
 
     const newTiles = tiles.slice();
     newTiles[idx].flipped = true;
@@ -90,11 +91,7 @@ const App = () => {
 
   const gridClass =
     "cells_container " +
-    (level === "easy"
-      ? "easy"
-      : level === "normal"
-      ? "normal"
-      : "hard");
+    (level === "easy" ? "easy" : level === "normal" ? "normal" : "hard");
 
   // Landing Page
   if (page === "landing") {
@@ -102,9 +99,38 @@ const App = () => {
       <div className="main_container">
         <h1>Welcome!</h1>
         <div className="levels_container">
-          <button id="easy" onClick={() => startGame("easy")}>Easy</button>
-          <button id="normal" onClick={() => startGame("normal")}>Normal</button>
-          <button id="hard" onClick={() => startGame("hard")}>Hard</button>
+          <div className="levels_container">
+            <label htmlFor="easy">
+              <input
+                type="radio"
+                id="easy"
+                name="difficulty"
+                onChange={() => startGame("easy")}
+                checked={level === "easy"}
+              />
+              Easy
+            </label>
+            <label htmlFor="normal">
+              <input
+                type="radio"
+                id="normal"
+                name="difficulty"
+                onChange={() => startGame("normal")}
+                checked={level === "normal"}
+              />
+              Normal
+            </label>
+            <label htmlFor="hard">
+              <input
+                type="radio"
+                id="hard"
+                name="difficulty"
+                onChange={() => startGame("hard")}
+                checked={level === "hard"}
+              />
+              Hard
+            </label>
+          </div>
         </div>
       </div>
     );
@@ -115,23 +141,37 @@ const App = () => {
     <div className="main_container">
       <h1>Memory Game</h1>
       <div className="levels_container">
-        <button
-          id="easy"
-          onClick={() => startGame("easy")}
-          style={{ background: level === "easy" ? "#eaf2ff" : undefined }}
-        >Easy</button>
-        <button
-          id="normal"
-          onClick={() => startGame("normal")}
-          style={{ background: level === "normal" ? "#eaf2ff" : undefined }}
-        >Normal</button>
-        <button
-          id="hard"
-          onClick={() => startGame("hard")}
-          style={{ background: level === "hard" ? "#eaf2ff" : undefined }}
-        >Hard</button>
+        <label htmlFor="easy">
+          <input
+            type="radio"
+            id="easy"
+            name="difficulty"
+            onChange={() => startGame("easy")}
+            checked={level === "easy"}
+          />
+          Easy
+        </label>
+        <label htmlFor="normal">
+          <input
+            type="radio"
+            id="normal"
+            name="difficulty"
+            onChange={() => startGame("normal")}
+            checked={level === "normal"}
+          />
+          Normal
+        </label>
+        <label htmlFor="hard">
+          <input
+            type="radio"
+            id="hard"
+            name="difficulty"
+            onChange={() => startGame("hard")}
+            checked={level === "hard"}
+          />
+          Hard
+        </label>
       </div>
-
       <div className="status_container">
         Attempts: {attempts}
         {isGameComplete() && (
