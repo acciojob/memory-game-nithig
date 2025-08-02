@@ -106,7 +106,11 @@ const App = () => {
               name="difficulty"
               onChange={() => startGame("easy")}
               checked={level === "easy"}
-              style={{ display: "none" }}
+              style={{
+                position: "absolute",
+                opacity: 0,
+                pointerEvents: "none",
+              }}
             />
             <button onClick={() => startGame("easy")}>Easy</button>
           </label>
@@ -117,7 +121,11 @@ const App = () => {
               name="difficulty"
               onChange={() => startGame("normal")}
               checked={level === "normal"}
-              style={{ display: "none" }}
+              style={{
+                position: "absolute",
+                opacity: 0,
+                pointerEvents: "none",
+              }}
             />
             <button onClick={() => startGame("normal")}>Normal</button>
           </label>
@@ -128,7 +136,11 @@ const App = () => {
               name="difficulty"
               onChange={() => startGame("hard")}
               checked={level === "hard"}
-              style={{ display: "none" }}
+              style={{
+                position: "absolute",
+                opacity: 0,
+                pointerEvents: "none",
+              }}
             />
             <button onClick={() => startGame("hard")}>Hard</button>
           </label>
@@ -149,7 +161,11 @@ const App = () => {
             name="difficulty"
             onChange={() => startGame("easy")}
             checked={level === "easy"}
-            style={{ display: "none" }}
+            style={{
+              position: "absolute",
+              opacity: 0,
+              pointerEvents: "none",
+            }}
           />
           <button
             style={{ background: level === "easy" ? "#eaf2ff" : undefined }}
@@ -164,7 +180,11 @@ const App = () => {
             name="difficulty"
             onChange={() => startGame("normal")}
             checked={level === "normal"}
-            style={{ display: "none" }}
+            style={{
+              position: "absolute",
+              opacity: 0,
+              pointerEvents: "none",
+            }}
           />
           <button
             style={{ background: level === "normal" ? "#eaf2ff" : undefined }}
@@ -179,7 +199,11 @@ const App = () => {
             name="difficulty"
             onChange={() => startGame("hard")}
             checked={level === "hard"}
-            style={{ display: "none" }}
+            style={{
+              position: "absolute",
+              opacity: 0,
+              pointerEvents: "none",
+            }}
           />
           <button
             style={{ background: level === "hard" ? "#eaf2ff" : undefined }}
