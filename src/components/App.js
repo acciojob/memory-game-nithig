@@ -123,15 +123,39 @@ const App = () => {
       ? "normal"
       : "hard");
 
-  // Landing Page view with buttons for level selection.
+  // Landing Page view with radio buttons for level selection.
   if (page === "landing") {
     return (
       <div className="main_container">
         <h1>Welcome!</h1>
         <div className="levels_container">
-          <button id="easy" onClick={() => startGame("easy")}>Easy</button>
-          <button id="normal" onClick={() => startGame("normal")}>Normal</button>
-          <button id="hard" onClick={() => startGame("hard")}>Hard</button>
+          <input
+            type="radio"
+            id="easy"
+            name="difficulty"
+            value="easy"
+            checked={level === "easy"}
+            onChange={(e) => startGame(e.target.value)}
+          />
+          <label htmlFor="easy">Easy</label>
+          <input
+            type="radio"
+            id="normal"
+            name="difficulty"
+            value="normal"
+            checked={level === "normal"}
+            onChange={(e) => startGame(e.target.value)}
+          />
+          <label htmlFor="normal">Normal</label>
+          <input
+            type="radio"
+            id="hard"
+            name="difficulty"
+            value="hard"
+            checked={level === "hard"}
+            onChange={(e) => startGame(e.target.value)}
+          />
+          <label htmlFor="hard">Hard</label>
         </div>
       </div>
     );
@@ -142,21 +166,33 @@ const App = () => {
     <div className="main_container">
       <h1>Memory Game</h1>
       <div className="levels_container">
-        <button
+        <input
+          type="radio"
           id="easy"
-          onClick={() => startGame("easy")}
-          style={{ background: level === "easy" ? "#eaf2ff" : undefined }}
-        >Easy</button>
-        <button
+          name="difficulty"
+          value="easy"
+          checked={level === "easy"}
+          onChange={(e) => startGame(e.target.value)}
+        />
+        <label htmlFor="easy">Easy</label>
+        <input
+          type="radio"
           id="normal"
-          onClick={() => startGame("normal")}
-          style={{ background: level === "normal" ? "#eaf2ff" : undefined }}
-        >Normal</button>
-        <button
+          name="difficulty"
+          value="normal"
+          checked={level === "normal"}
+          onChange={(e) => startGame(e.target.value)}
+        />
+        <label htmlFor="normal">Normal</label>
+        <input
+          type="radio"
           id="hard"
-          onClick={() => startGame("hard")}
-          style={{ background: level === "hard" ? "#eaf2ff" : undefined }}
-        >Hard</button>
+          name="difficulty"
+          value="hard"
+          checked={level === "hard"}
+          onChange={(e) => startGame(e.target.value)}
+        />
+        <label htmlFor="hard">Hard</label>
       </div>
 
       <div className="status_container">
