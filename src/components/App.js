@@ -99,38 +99,39 @@ const App = () => {
       <div className="main_container">
         <h1>Welcome!</h1>
         <div className="levels_container">
-          <div className="levels_container">
-            <label htmlFor="easy">
-              <input
-                type="radio"
-                id="easy"
-                name="difficulty"
-                onChange={() => startGame("easy")}
-                checked={level === "easy"}
-              />
-              Easy
-            </label>
-            <label htmlFor="normal">
-              <input
-                type="radio"
-                id="normal"
-                name="difficulty"
-                onChange={() => startGame("normal")}
-                checked={level === "normal"}
-              />
-              Normal
-            </label>
-            <label htmlFor="hard">
-              <input
-                type="radio"
-                id="hard"
-                name="difficulty"
-                onChange={() => startGame("hard")}
-                checked={level === "hard"}
-              />
-              Hard
-            </label>
-          </div>
+          <label>
+            <input
+              type="radio"
+              id="easy"
+              name="difficulty"
+              onChange={() => startGame("easy")}
+              checked={level === "easy"}
+              style={{ display: "none" }}
+            />
+            <button onClick={() => startGame("easy")}>Easy</button>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="normal"
+              name="difficulty"
+              onChange={() => startGame("normal")}
+              checked={level === "normal"}
+              style={{ display: "none" }}
+            />
+            <button onClick={() => startGame("normal")}>Normal</button>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="hard"
+              name="difficulty"
+              onChange={() => startGame("hard")}
+              checked={level === "hard"}
+              style={{ display: "none" }}
+            />
+            <button onClick={() => startGame("hard")}>Hard</button>
+          </label>
         </div>
       </div>
     );
@@ -141,37 +142,53 @@ const App = () => {
     <div className="main_container">
       <h1>Memory Game</h1>
       <div className="levels_container">
-        <label htmlFor="easy">
+        <label>
           <input
             type="radio"
             id="easy"
             name="difficulty"
             onChange={() => startGame("easy")}
             checked={level === "easy"}
+            style={{ display: "none" }}
           />
-          Easy
+          <button
+            style={{ background: level === "easy" ? "#eaf2ff" : undefined }}
+          >
+            Easy
+          </button>
         </label>
-        <label htmlFor="normal">
+        <label>
           <input
             type="radio"
             id="normal"
             name="difficulty"
             onChange={() => startGame("normal")}
             checked={level === "normal"}
+            style={{ display: "none" }}
           />
-          Normal
+          <button
+            style={{ background: level === "normal" ? "#eaf2ff" : undefined }}
+          >
+            Normal
+          </button>
         </label>
-        <label htmlFor="hard">
+        <label>
           <input
             type="radio"
             id="hard"
             name="difficulty"
             onChange={() => startGame("hard")}
             checked={level === "hard"}
+            style={{ display: "none" }}
           />
-          Hard
+          <button
+            style={{ background: level === "hard" ? "#eaf2ff" : undefined }}
+          >
+            Hard
+          </button>
         </label>
       </div>
+
       <div className="status_container">
         Attempts: {attempts}
         {isGameComplete() && (
