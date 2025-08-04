@@ -1,123 +1,158 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f0f2f5;
-  color: #333;
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(0, 0, 0, 0.95);
+  background-color: #00B9B3;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.main_container {
-  text-align: center;
-  padding: 20px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-h1 {
-  font-size: 2.5em;
-  color: #1e88e5;
-  margin-bottom: 20px;
+.levels_container{
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.7rem;
 }
 
-.levels_container {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 30px;
+.radio-input{
+    width: 1.5rem;
+    cursor: pointer;
 }
 
-/* Hide the default radio button while keeping it visible to Cypress */
-.levels_container input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none; /* Prevents the invisible radio button from capturing clicks */
+.radioBtns{
+    display: flex;
+    gap: 2rem;
 }
 
-/* Style the label to look like a button */
-.levels_container label {
-  cursor: pointer;
-  padding: 10px 20px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  font-size: 1em;
-  font-weight: bold;
-  color: #555;
-  background-color: #f9f9f9;
+.radiobtn{
+    display: flex;
+    gap: 5px;
 }
 
-/* Style the label when the radio button is checked */
-.levels_container input[type="radio"]:checked + label {
-  background-color: #1e88e5;
-  color: white;
-  border-color: #1e88e5;
-  box-shadow: 0 2px 8px rgba(30, 136, 229, 0.3);
+#startGameBtn{
+    width: 9rem;
+    height: 3rem;
+    font-size: 1.3rem;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #0D3311;
+    color: #fff;
+    font-weight: 500;
 }
 
-.status_container {
-  font-size: 1.2em;
-  margin-bottom: 20px;
-  color: #555;
-  font-weight: bold;
+/* Easy Mode Page */
+
+.header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.cells_container {
-  display: grid;
-  gap: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #e0e0e0;
+.newGameBtn, .resetGameBtn{
+    width: 10rem;
+    height: 2rem;
+    border-radius: 10px;
+    border: none;
+    background-color: yellowgreen;
+    cursor: pointer;
+    color: rgb(0, 0, 0, 0.95);
+    font-weight: 500;
+    font-size: 1.1rem;
 }
 
-/* Grid layout for different difficulty levels */
-.cells_container.easy {
-  grid-template-columns: repeat(4, 80px);
-}
-.cells_container.normal {
-  grid-template-columns: repeat(4, 80px);
-}
-.cells_container.hard {
-  grid-template-columns: repeat(8, 60px);
+.easy-mode-page{
+    width: 70%;
+    margin: auto;
+    margin-top: 2rem;
 }
 
-.tile {
-  width: 80px;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #1e88e5;
-  color: white;
-  font-size: 2em;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  transform: rotateY(0deg);
-  transition: transform 0.6s, background-color 0.3s;
-  position: relative;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.header-h1{
+    font-size: 2rem;
+    width: 53%;
+    margin: auto;
 }
 
-.tile.flipped,
-.tile.matched {
-  background-color: #f9f9f9;
-  color: #1e88e5;
-  transform: rotateY(180deg);
+.game-result{
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
-.tile.matched {
-  background-color: #2ecc71;
-  color: white;
-  pointer-events: none;
+.header-tries{
+    font-size: 1.5rem;
+    width: 53%;
+    margin: auto;
+    margin-bottom: 1rem;
 }
 
-/* Hard mode tile size adjustment */
-.cells_container.hard .tile {
-  width: 60px;
-  height: 60px;
-  font-size: 1.5em;
+#easy-board{
+    display: grid;
+    grid-template-columns: repeat(4, 7rem);
+    grid-template-rows: repeat(2, 7rem);
+    gap: 1rem;
+    justify-content: center;
+}
+
+.cells{
+    background-color: #0D3311;
+    cursor: pointer;
+    font-size: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+} 
+
+/* Hard Mode Page */
+
+.hard-mode-page{
+    width: 70%;
+    height: 145vh;
+    margin: auto;
+    margin-top: 2rem;
+}
+
+#hard-board{
+    display: grid;
+    grid-template-columns: repeat(4, 7rem);
+    grid-template-rows: repeat(6, 7rem);
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Normal Mode Page */
+
+.normal-mode-page{
+    width: 70%;
+    height: 100vh;
+    margin: auto;
+    margin-top: 2rem;
+}
+
+#normal-board{
+    display: grid;
+    grid-template-columns: repeat(4, 7rem);
+    grid-template-rows: repeat(4, 7rem);
+    justify-content: center;
+    gap: 1rem;
 }
